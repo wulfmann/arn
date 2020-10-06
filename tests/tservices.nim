@@ -1,5 +1,3 @@
-# import ../arn/[ arn ]
-
 import asyncdispatch, macros, strutils
 import ../arn/parser
 

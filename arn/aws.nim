@@ -60,7 +60,8 @@ proc createConsoleUrl*(session: Session, destination="https://console.aws.amazon
     var url = base ? {
         "Action": "login",
         "Issuer": "",
-        "Destination": encodeUrl(destination),
+        "Destination": destination,
         "SigninToken": signinToken
     }
+
     result = $url
