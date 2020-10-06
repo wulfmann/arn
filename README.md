@@ -74,6 +74,7 @@ Your AWS session uses the following path to resolve credentials:
 The region for a URL uses the following path to resolve the region:
 
 - If the ARN contains a region it is used
+- If the region is passed into the command it is used
 - If an `AWS_REGION` environment variable is found it is used
 - If a region is set for the specified AWS profile it is used
 
