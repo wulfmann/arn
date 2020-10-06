@@ -1,6 +1,6 @@
 version       = "0.1.0"
-author        = "Aidan Steele"
-description   = "AWS SDK for Nim"
+author        = "Joe Snell"
+description   = "Create AWS Console URLs from ARNs"
 license       = "MIT"
 
 # Dependencies

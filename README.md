@@ -53,7 +53,7 @@ https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/test$j
 |----|---------|----------|
 |Cloudformation|Stack, ResourceType||
 |Cloudfront|Distribution||
-|Cloudfront|Alarm||
+|Cloudwatch|Alarm||
 |DynamoDB|Table||
 |IAM|Policy, Role, User||
 |Lambda|Function, Layer||
