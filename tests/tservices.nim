@@ -1,5 +1,6 @@
 import asyncdispatch, macros, strutils
 import ../arn/parser
+import ../arn/services/base
 
 macro mkImport(name: static[string]): untyped =
     result = newNimNode(nnkImportStmt).add(newIdentNode(name))
@@ -10,20 +11,24 @@ var allFutures = newSeq[Future[void]]()
 template genTest(serviceName: untyped, procName: untyped, checks: seq[(string, string)]) =
     const name = astToStr(serviceName)
     const modName = "../arn/services/" & name.toLowerAscii()
-    mkImport modName
+    mkImport(modName)
 
     block:
         proc runTest() {.async.} =
             for check in checks:
                 let (rawArn, expected) = check
                 var arn = parseArn(rawArn)
-
                 echo "Running tests for ", name , " ", rawArn
                 let service = serviceName(arn: arn)
                 let j = service.procName()
-                # echo j
-                # echo expected
-                assert j == expected
+
+                try:
+                    assert j == expected
+                except:
+                    echo "Assertion failed"
+                    echo "Expected: ", expected
+                    echo "Actual: ", j
+                    raise
 
         allFutures.add(runTest())
 

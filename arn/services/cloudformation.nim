@@ -2,7 +2,7 @@ import base, uri
 
 type Cloudformation* = ref object of BaseService
 
-method getHash*(service: Cloudformation, arn, resource, resourceName: string): string =
+method getHash*(service: Cloudformation, resource, resourceName: string): string =
     if resource == "stack":
         var nestedPath = "/stacks/stackinfo"
         var hash = parseUri(nestedPath) ? {
@@ -10,13 +10,13 @@ method getHash*(service: Cloudformation, arn, resource, resourceName: string): s
             "filteringStatus": "active",
             "viewNested": "true",
             "hideStacks": "false",
-            "stackId": encodeUrl(arn)
+            "stackId": encodeUrl(service.arn.raw)
         }
         result = $hash
     elif resource == "type":
         var nestedPath = "/registry/resourceTypes/details"
         var hash = parseUri(nestedPath) ? {
-            "arn": encodeUrl(arn)
+            "arn": encodeUrl(service.arn.raw)
         }
         result = $hash
     else:

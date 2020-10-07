@@ -33,7 +33,7 @@ proc parseResource(sixth: string, rest: seq[string]): (string, string, string) =
         resource = sixth
 
     if rest.len > 0:
-        if isNilOrWhitespace(resourceName):
+        if isEmptyOrWhitespace(resourceName):
             resourceName = ""
         else:
             resourceName &= ":"
