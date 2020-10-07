@@ -55,15 +55,7 @@ https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/test$j
 
 ## Supported Services
 
-|Name|Resources|Completion|
-|----|---------|----------|
-|Cloudformation|Stack, ResourceType||
-|Cloudfront|Distribution||
-|Cloudwatch|Alarm||
-|DynamoDB|Table||
-|IAM|Policy, Role, User||
-|Lambda|Function, Layer||
-|Logs|Log Group, Log Stream||
+You can view the list of supported services / actions in the [support doc](/docs/support.md).
 
 ## Credential Resolution
 
