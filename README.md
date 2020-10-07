@@ -43,9 +43,15 @@ For usage and options, see the [usage section](#usage).
 ## Usage
 
 ```bash
-$ arn parse -a arn:aws:iam::aws:policy/test
+$ arn arn:aws:iam::aws:policy/test
 https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/test$jsonEditor
 ```
+
+### Options
+
+|Name|Required|Default|Description|
+|----|--------|-------|-----------|
+|`--profile`|false||The AWS profile to use|
 
 ## Supported Services
 
