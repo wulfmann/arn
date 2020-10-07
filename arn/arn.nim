@@ -1,18 +1,30 @@
 import parser, tables, url, aws, browsers
 
-proc openArn*(arn: string, profile="default", open=true): string =
-  var arn: Arn = parseArn(arn)
+proc run*(profile="default", open=true, args: seq[string]): string =
+  if args.len > 1:
+    raise ValueError.newException("only one arn is allowed to be specified")
+
+  var
+    rawArn = args[0]
+    arn: Arn
+
+  try:
+    arn = parseArn(rawArn)
+  except InvalidArn:
+    echo getCurrentExceptionMsg()
+    quit(1)
+
   var arnUrl = getConsoleUrl(arn)
-  var session = getSession(profile)
-  result = session.createConsoleUrl(arnUrl)
 
   if open:
-    openDefaultBrowser(result)
-
-proc parse*(arn: string): string =
-  var arn: Arn = parseArn(arn)
-  result = getConsoleUrl(arn)
+    var
+      session = getSession(profile)
+      authenticatedUrl = session.createConsoleUrl(arnUrl)
+    openDefaultBrowser(authenticatedUrl)
+    return authenticatedUrl
+  else:
+    return arnUrl
 
 when isMainModule:
   import cligen
-  dispatchMulti([parse], [openArn])
+  dispatch(run)

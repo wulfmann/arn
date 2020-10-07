@@ -1,8 +1,8 @@
-import base, uri, strutils, unpack
+import base, uri
 
 type Cloudformation* = ref object of BaseService
 
-proc getHash(arn, resource, resourceName: string): string =
+method getHash*(service: Cloudformation, arn, resource, resourceName: string): string =
     if resource == "stack":
         var nestedPath = "/stacks/stackinfo"
         var hash = parseUri(nestedPath) ? {
@@ -21,10 +21,3 @@ proc getHash(arn, resource, resourceName: string): string =
         result = $hash
     else:
         result = ""
-
-proc getConsoleUrl*(service: Cloudformation): string =
-    var baseUri = service.getBaseUri()
-    var path = service.getPath()
-    var url = parseUri(baseUri) / path ? { "region": service.arn.region  }
-    var hash = getHash(service.arn.raw, service.arn.resource, service.arn.resourceName)
-    result = $url & "#" & hash

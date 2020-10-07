@@ -2,7 +2,7 @@ import base, uri, unpack, strutils
 
 type Lambda* = ref object of BaseService
 
-proc getHash(resource, resourceName: string): string =
+method getHash*(service: Lambda, resource, resourceName: string): string =
     if resource == "function":
         var nestedPath = "/functions/" & resourceName
         var nestedUri = parseUri(nestedPath) ? { "tab": "configuration" }
@@ -14,10 +14,3 @@ proc getHash(resource, resourceName: string): string =
         result = $nestedUri
     else:
         result = ""
-
-proc getConsoleUrl*(service: Lambda, region="us-east-1"): string =
-    var baseUri = service.getBaseUri()
-    var path = service.getPath()
-    var url = parseUri(baseUri) / path ? { "region": service.arn.region  }
-    var hash = getHash(service.arn.resource, service.arn.resourceName)
-    result = $url & "#" & hash

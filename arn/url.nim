@@ -1,6 +1,7 @@
 import parser
 
 # Services
+import "services/base"
 import "services/cloudformation"
 import "services/cloudfront"
 import "services/cloudwatch"

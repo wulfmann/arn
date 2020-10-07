@@ -1,8 +1,8 @@
-import base, uri, strutils
+import base, uri
 
 type IAM* = ref object of BaseService
 
-proc getHash(resource, resourceName: string): string =
+method getHash*(service: IAM, resource, resourceName: string): string =
     if resource == "policy":
         var nestedPath = "/policies/arn:aws:iam::aws:policy/" & resourceName & "$jsonEditor"
         var nestedUri = parseUri(nestedPath)
@@ -17,14 +17,3 @@ proc getHash(resource, resourceName: string): string =
         result = $nestedUri
     else:
         result = ""
-
-proc getConsoleUrl*(service: IAM): string =
-    var baseUri = service.getBaseUri()
-    var path = service.getPath()
-
-    var url = parseUri(baseUri) / path
-    if not isNilOrWhitespace(service.arn.region):
-        url = url ? { "region": service.arn.region  }
-
-    var hash = getHash(service.arn.resource, service.arn.resourceName)
-    result = $url & "#" & hash

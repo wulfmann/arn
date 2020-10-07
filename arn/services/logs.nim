@@ -1,8 +1,8 @@
-import base, uri, strutils, unpack
+import base, strutils, unpack
 
 type Logs* = ref object of BaseService
 
-proc getHash(resource, resourceName: string): string =
+method getHash*(service: Logs, resource, resourceName: string): string =
     var resourceType = resource
 
     if "log-stream" in resourceName:
@@ -20,12 +20,5 @@ proc getHash(resource, resourceName: string): string =
     else:
         result = ""
 
-proc getPath*(service: Logs): string =
+method getPath*(service: Logs): string =
     "cloudwatch/home"
-
-proc getConsoleUrl*(service: Logs, region="us-east-1"): string =
-    var baseUri = service.getBaseUri()
-    var path = service.getPath()
-    var url = parseUri(baseUri) / path ? { "region": service.arn.region  }
-    var hash = getHash(service.arn.resource, service.arn.resourceName)
-    result = $url & "#" & hash
