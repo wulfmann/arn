@@ -13,6 +13,7 @@ The following tables are derived from the [IAM Resource Tables](https://docs.aws
     - [IAM](#iam)
     - [Lambda](#lambda)
     - [Logs](#logs)
+    - [S3](#s3)
 
 ### Cloudformation
 
@@ -88,3 +89,12 @@ The following tables are derived from the [IAM Resource Tables](https://docs.aws
 |--------|------|
 |Log Group|✅|
 |Log Stream|✅|
+
+### S3
+
+|Resource|Status|
+|--------|------|
+|Access Point||
+|Bucket|✅|
+|Object|✅|
+|Job||

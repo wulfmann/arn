@@ -10,6 +10,7 @@ import "services/dynamodb"
 import "services/iam"
 import "services/lambda"
 import "services/logs"
+import "services/s3"
 
 proc getConsoleUrl*(arn: Arn): string =
     case arn.service:
@@ -20,4 +21,5 @@ proc getConsoleUrl*(arn: Arn): string =
     of "iam": IAM(arn: arn).getConsoleUrl()
     of "lambda": Lambda(arn: arn).getConsoleUrl()
     of "logs": Logs(arn: arn).getConsoleUrl()
+    of "s3": S3(arn: arn).getConsoleUrl()
     else: Default(arn: arn).getConsoleUrl()

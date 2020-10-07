@@ -7,7 +7,7 @@ type BaseService* = ref object of RootObj
 method getPath*(service: BaseService): string {.base.} =
     service.arn.service & "/home"
 
-proc getBaseUri*(service: BaseService): string =
+method getBaseUri*(service: BaseService): string {.base.} =
     "https://console.aws.amazon.com"
 
 # Helpers
@@ -19,6 +19,10 @@ proc encodeHash*(hash: openArray[(string, string)], delimeter="="): string =
         result.add(delimeter)
         result.add(val)
 
+method getQueryString*(service: BaseService): seq[(string, string)] =
+    if not isEmptyOrWhitespace(service.arn.region):
+        result.add(("region", service.arn.region))
+
 method getHash*(service: BaseService, resource, resourceName: string): string {.base.} = ""
 
 method getConsoleUrl*(service: BaseService): string {.base.} =
@@ -26,8 +30,9 @@ method getConsoleUrl*(service: BaseService): string {.base.} =
     var path = service.getPath()
 
     var url = parseUri(baseUri) / path
-    if not isEmptyOrWhitespace(service.arn.region):
-        url = url ? { "region": service.arn.region  }
+
+    var queryString = service.getQueryString()
+    url = url ? queryString
 
     var hash = service.getHash(service.arn.resource, service.arn.resourceName)
 

@@ -46,6 +46,8 @@ proc parseArn*(arn: string): Arn =
 
     if components.len < 6:
         raise InvalidArn.newException("ARNs must have at least 6 components")
+    
+    # var resource, resourceName: string
 
     [
         prefix,
@@ -60,6 +62,17 @@ proc parseArn*(arn: string): Arn =
     if prefix != "arn":
         raise InvalidArn.newException("ARNs must start with 'arn'")
 
+    # if "/" in sixth:
+    #     var separated = sixth.split("/")
+    #     resource = separated[0]
+    #     resourceName = separated[1]
+    # elif ":" in sixth:
+    #     var separated = sixth.split(":")
+    #     resource = separated[0]
+    #     resourceName = separated[1]
+    # else:
+    #     resource = ""
+    #     resourceName = sixth
     var (resource, resourceName, sep) = parseResource(sixth, rest)
 
     result = Arn(

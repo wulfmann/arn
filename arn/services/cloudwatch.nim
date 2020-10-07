@@ -7,5 +7,3 @@ method getHash*(service: Cloudwatch, resource, resourceName: string): string =
         result = encodeHash({
             "alarmsV2:alarm": resourceName
         }, "/")
-    else:
-        result = ""

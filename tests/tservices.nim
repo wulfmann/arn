@@ -27,7 +27,7 @@ template genTest(serviceName: untyped, procName: untyped, checks: seq[(string, s
                 except:
                     echo "Assertion failed"
                     echo "Expected: ", expected
-                    echo "Actual: ", j
+                    echo "Actual:   ", j
                     raise
 
         allFutures.add(runTest())
@@ -63,6 +63,11 @@ genTest(Cloudfront, getConsoleUrl, @[
 
 genTest(Cloudwatch, getConsoleUrl, @[
     ("arn:aws:cloudwatch:us-east-1:080615554596:alarm:test", "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#alarmsV2:alarm/test")
+])
+
+genTest(S3, getConsoleUrl, @[
+    ("arn:aws:s3:::testbucket/testobj", "https://s3.console.aws.amazon.com/s3/object/testbucket/testobj?tab=overview"),
+    ("arn:aws:s3:::testbucket", "https://s3.console.aws.amazon.com/s3/buckets/testbucket?tab=overview")
 ])
 
 waitFor all(allFutures)
